@@ -1,22 +1,23 @@
-import { NextApiHandler } from 'next';
-import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+import { NextApiHandler } from "next";
+import NextAuth from "next-auth";
+import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
-import prisma from '../../../lib/prisma';
-
-const options = {
-  // Add any external providers if wanted
-  providers: [
-    Providers.Email({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-    }),
-  ],
-
-  database: process.env.DATABASE_URL,
-  adapter: Adapters.Prisma.Adapter({ prisma }),
-
-};
+import prisma from "../../../lib/prisma";
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
+
+const options = {
+      // Providers.Email({
+    //   server: process.env.EMAIL_SERVER,
+    //   from: process.env.EMAIL_FROM,
+    // }),
+  providers: [
+    Providers.Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    })
+  ],
+  adapter: Adapters.Prisma.Adapter({ prisma }),
+  secret: process.env.SECRET,
+};
