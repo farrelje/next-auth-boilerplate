@@ -7,7 +7,7 @@ services:
     volumes:
       - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5433:5432" # existing port 5432, so map different port
+      - "5433:5432" # if existing port 5432, map different port
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USER}
